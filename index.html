@@ -1,38 +1,16 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>인증센터</title>
-    <script src="https://js.tosspayments.com/v1/payment"></script>
+    <title>인증 센터</title>
 </head>
 <body style="background:#1a1a1a; color:white; text-align:center; padding-top:100px;">
-    <h2>프로그램 결제 테스트</h2>
-    <input type="email" id="userEmail" placeholder="이메일 입력" style="padding:10px;">
-    <button id="pay-button" style="padding:10px 20px; background:#3182f6; color:white; border:none; cursor:pointer;">
-        결제하기
-    </button>
+    <h2>파일 연결 성공!</h2>
+    
+    <a href="https://github.com/kixkorea/gate/blob/main/splash_screen_logo.png" target="_blank" style="padding:20px; background:orange; color:black; font-weight:bold; text-decoration:none;">
+        클릭해서 내 그림 확인하기
+    </a>
 
-    <script>
-        // 토스 테스트 키
-        var clientKey = 'test_ck_D53Qo7Q68VJnr1k6l4V3uW6YqEga';
-        var tossPayments = TossPayments(clientKey);
-
-        var button = document.getElementById('pay-button');
-
-        button.addEventListener('click', function () {
-            var email = document.getElementById('userEmail').value;
-            if(!email) return alert("이메일을 입력해주세요!");
-
-            tossPayments.requestPayment('카드', {
-                amount: 1000,
-                orderId: 'TEST_' + new Date().getTime(),
-                orderName: '프로그램 인증 결제',
-                customerEmail: email,
-                // 성공/실패 시 그냥 현재 페이지에 머물게 설정 (오류 방지)
-                successUrl: window.location.href,
-                failUrl: window.location.href,
-            });
-        });
-    </script>
+    <p style="margin-top:30px;">이게 되면 이제 다음은 '결제창'입니다!</p>
 </body>
 </html>
