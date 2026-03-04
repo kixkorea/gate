@@ -4,85 +4,39 @@
     <meta charset="UTF-8">
     <title>인증 센터</title>
     <script src="https://js.tosspayments.com/v1/payment"></script>
-    <style>
-        /* 배경을 흰색으로, 깔끔한 글꼴 설정 */
-        body {
-            background-color: white;
-            color: #333;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            display: flex;
-            align-items: center; /* 이미지와 버튼을 세로 가운데 정렬 */
-            gap: 20px; /* 이미지와 버튼 사이 간격 */
-            padding: 40px;
-            border: 1px solid #eee;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        img {
-            max-width: 150px; /* 이미지 크기 조절 */
-            height: auto;
-            border-radius: 8px;
-        }
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        input {
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            width: 200px;
-        }
-        button {
-            padding: 15px 30px;
-            background-color: #3182f6; /* 토스 블루 색상 */
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        button:hover {
-            background-color: #1b64da;
-        }
-    </style>
 </head>
-<body>
+<body style="background:#1a1a1a; color:white; text-align:center; padding-top:50px; font-family:sans-serif;">
+    
+    <img src="https://raw.githubusercontent.com/kixkorea/gate/main/splash_screen_logo.png" style="max-width:300px; margin-bottom:20px;">
+    
+    <h1>프로그램 인증 센터</h1>
+    <p>이메일을 입력하고 아래 버튼을 누르면 결제가 시작됩니다.</p>
 
-<div class="container">
-    <img src="https://github.com/kixkorea/gate/blob/main/splash_screen_logo.png?raw=true" alt="로고">
+    <input type="email" id="uEmail" placeholder="abc@naver.com" style="padding:10px; width:250px; border-radius:5px;">
+    <br><br>
 
-    <div class="input-group">
-        <input type="email" id="uEmail" placeholder="이메일 입력">
-        <button onclick="pay()">결제하기</button>
-    </div>
-</div>
+    <button onclick="pay()" style="padding:15px 30px; background:#3182f6; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">
+        10,000원 결제하기
+    </button>
 
-<script>
-    var toss = TossPayments('test_ck_D53Qo7Q68VJnr1k6l4V3uW6YqEga');
-    function pay() {
-        var email = document.getElementById('uEmail').value;
-        if(!email) return alert("이메일을 먼저 입력해주세요!");
+    <script>
+        var toss = TossPayments('test_ck_D53Qo7Q68VJnr1k6l4V3uW6YqEga');
 
-        toss.requestPayment('카드', {
-            amount: 10000,
-            orderId: 'ORD-' + Date.now(),
-            orderName: '프로그램 인증권',
-            customerEmail: email,
-            successUrl: window.location.href,
-            failUrl: window.location.href
-        });
-    }
-</script>
+        function pay() {
+            var email = document.getElementById('uEmail').value;
+            if(!email) return alert("이메일을 입력해주세요!");
 
+            toss.requestPayment('카드', {
+                amount: 10000,
+                orderId: 'ORD-' + Date.now(),
+                orderName: '프로그램 이용권',
+                customerEmail: email,
+                successUrl: window.location.href, 
+                failUrl: window.location.href
+            }).catch(function (error) {
+                alert(error.message);
+            });
+        }
+    </script>
 </body>
 </html>
