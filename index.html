@@ -1,16 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>인증 센터</title>
-</head>
-<body style="background:#1a1a1a; color:white; text-align:center; padding-top:100px;">
-    <h2>파일 연결 성공!</h2>
-    
-    <a href="https://github.com/kixkorea/gate/blob/main/splash_screen_logo.png?raw=true" target="_blank" style="padding:20px; background:orange; color:black; font-weight:bold; text-decoration:none;">
-        클릭해서 내 그림 확인하기
-    </a>
+<img src="https://github.com/kixkorea/gate/blob/main/splash_screen_logo.png?raw=true" style="width:200px;">
 
-    <p style="margin-top:30px;">이게 되면 이제 다음은 '결제창'입니다!</p>
-</body>
-</html>
+<button onclick="pay()">결제하기</button>
+
+<script>
+    var toss = TossPayments('test_ck_D53Qo7Q68VJnr1k6l4V3uW6YqEga');
+    function pay() {
+        toss.requestPayment('카드', {
+            amount: 10000,
+            orderId: 'ORD-' + Date.now(),
+            orderName: '프로그램 이용권',
+            customerEmail: 'test@naver.com', // 나중에 입력창 연결
+            successUrl: window.location.href,
+            failUrl: window.location.href
+        });
+    }
+</script>
