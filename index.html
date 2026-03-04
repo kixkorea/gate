@@ -1,17 +1,88 @@
-<img src="https://github.com/kixkorea/gate/blob/main/splash_screen_logo.png?raw=true" style="width:200px;">
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>인증 센터</title>
+    <script src="https://js.tosspayments.com/v1/payment"></script>
+    <style>
+        /* 배경을 흰색으로, 깔끔한 글꼴 설정 */
+        body {
+            background-color: white;
+            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            align-items: center; /* 이미지와 버튼을 세로 가운데 정렬 */
+            gap: 20px; /* 이미지와 버튼 사이 간격 */
+            padding: 40px;
+            border: 1px solid #eee;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        img {
+            max-width: 150px; /* 이미지 크기 조절 */
+            height: auto;
+            border-radius: 8px;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        input {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 200px;
+        }
+        button {
+            padding: 15px 30px;
+            background-color: #3182f6; /* 토스 블루 색상 */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background-color: #1b64da;
+        }
+    </style>
+</head>
+<body>
 
-<button onclick="pay()">결제하기</button>
+<div class="container">
+    <img src="https://github.com/kixkorea/gate/blob/main/splash_screen_logo.png?raw=true" alt="로고">
+
+    <div class="input-group">
+        <input type="email" id="uEmail" placeholder="이메일 입력">
+        <button onclick="pay()">결제하기</button>
+    </div>
+</div>
 
 <script>
     var toss = TossPayments('test_ck_D53Qo7Q68VJnr1k6l4V3uW6YqEga');
     function pay() {
+        var email = document.getElementById('uEmail').value;
+        if(!email) return alert("이메일을 먼저 입력해주세요!");
+
         toss.requestPayment('카드', {
             amount: 10000,
             orderId: 'ORD-' + Date.now(),
-            orderName: '프로그램 이용권',
-            customerEmail: 'test@naver.com', // 나중에 입력창 연결
+            orderName: '프로그램 인증권',
+            customerEmail: email,
             successUrl: window.location.href,
             failUrl: window.location.href
         });
     }
 </script>
+
+</body>
+</html>
