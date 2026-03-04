@@ -2,14 +2,41 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Gateway</title>
+    <title>인증 센터</title>
+    <script src="https://js.tosspayments.com/v1/payment"></script>
 </head>
 <body style="background-color: #1a1a1a; color: white; text-align: center; padding-top: 50px; font-family: sans-serif;">
     <h1>나의 프로그램 인증 센터</h1>
     <p>이메일을 입력하고 결제를 진행하세요.</p>
+    
     <input type="email" id="email" placeholder="email@example.com" style="padding: 10px; width: 250px;">
     <br><br>
-    <button style="padding: 10px 20px; cursor: pointer;">최초 구매</button>
-    <button style="padding: 10px 20px; cursor: pointer;">구독 연장</button>
+    
+    <button onclick="pay('신규구매', 10000)" style="padding: 10px 20px; cursor: pointer;">최초 구매 (1만원)</button>
+    <button onclick="pay('구독연장', 5000)" style="padding: 10px 20px; cursor: pointer;">구독 연장 (5천원)</button>
+
+    <script>
+        // 토스 테스트 클라이언트 키 (나중에 제작자님 것으로 바꾸면 됩니다)
+        const clientKey = 'test_ck_D53Qo7Q68VJnr1k6l4V3uW6YqEga'; 
+        const tossPayments = TossPayments(clientKey);
+
+        function pay(orderName, amount) {
+            const customerEmail = document.getElementById('email').value;
+            
+            if(!customerEmail) {
+                alert("이메일을 먼저 입력해주세요!");
+                return;
+            }
+
+            tossPayments.requestPayment('카드', {
+                amount: amount,
+                orderId: 'ID_' + new Date().getTime(), // 매번 다른 주문번호 생성
+                orderName: orderName,
+                customerEmail: customerEmail,
+                successUrl: window.location.origin + '/success', // 성공 시 이동할 주소
+                failUrl: window.location.origin + '/fail',       // 실패 시 이동할 주소
+            });
+        }
+    </script>
 </body>
 </html>
